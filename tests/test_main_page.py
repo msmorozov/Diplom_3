@@ -14,13 +14,13 @@ class TestMainPage:
         main_page.go_to_orders_feed_page()
         order_feed_page = OrderFeedPage(driver)
         order_feed_page.go_to_main_page()
-        assert main_page.get_url() == EndpointURLs.MAIN_PAGE
+        assert main_page.current_url() == EndpointURLs.MAIN_PAGE
 
     @allure.title('Проверка перехода по клику на «Лента заказов»')
     def test_go_to_orders_page(self, driver):
         main_page = MainPage(driver)
         main_page.go_to_orders_feed_page()
-        assert main_page.get_url() == EndpointURLs.FEED
+        assert main_page.current_url() == EndpointURLs.FEED
 
     @allure.title('Проверка, что если кликнуть на ингредиент, появится всплывающее окно с деталями')
     def test_open_details(self, driver):

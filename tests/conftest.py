@@ -19,16 +19,35 @@ def driver(request):
     yield driver
     driver.quit()
 
+"""
 @pytest.fixture()
 def login_user(driver, user_data):
     MainPage(driver).enter_in_account()
     LoginPage(driver).login_user(user_data)
+"""
 
-
+"""
 @pytest.fixture()
 def user_data():
     user_data = helpers.create_user_data()
     response = requests.post(EndpointURLs.REGISTER_USER, user_data)
     yield user_data
+    headers = {'Authorization': response.json()['accessToken']}
+    requests.delete(EndpointURLs.DELETE_USER, headers=headers)"""
+
+@pytest.fixture
+def login_user(driver, registered_user):
+    MainPage(driver).enter_in_account()
+    LoginPage(driver).login_user(registered_user)
+
+@pytest.fixture
+def user_data():
+    user_data = helpers.create_user_data()
+    yield user_data
+
+@pytest.fixture
+def registered_user(user_data):
+    response = requests.post(EndpointURLs.REGISTER_USER, json=user_data)
+    yield user_data  # Возвращаем user_data для использования в login_user
     headers = {'Authorization': response.json()['accessToken']}
     requests.delete(EndpointURLs.DELETE_USER, headers=headers)

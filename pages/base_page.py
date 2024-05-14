@@ -11,7 +11,7 @@ class BasePage:
 
     # Навигация
     @allure.step('Вернуть текущий Url')
-    def get_url(self):
+    def current_url(self):
         return self.driver.current_url
 
     @allure.step('Дождаться ожидаемого Url')
